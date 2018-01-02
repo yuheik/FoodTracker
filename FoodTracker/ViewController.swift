@@ -9,6 +9,9 @@
 import UIKit
 
 class ViewController: UIViewController {
+    //MARK: Properties
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var mealNameLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
