@@ -80,6 +80,7 @@
                         <outlet property="mealNameLabel" destination="TfD-dU-D59" id="8vc-B0-ArB"/>
                         <outlet property="nameTextField" destination="lEf-9r-zXs" id="shd-OF-8eW"/>
                         <outlet property="photoImageView" destination="HUK-fO-azw" id="ndt-3v-Isf"/>
+                        <outlet property="ratingControl" destination="dLU-1N-qi5" id="fEL-vX-F4N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
