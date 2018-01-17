@@ -16,6 +16,13 @@ class MealViewController: UIViewController,
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var ratingControl: RatingControl!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+
+    /*
+     This value is either passed by 'MealViewController.swift' in 'prepare(for:sender:)'
+     or constructed as part of adding a new meal.
+     */
+    var meal: Meal?
 
     override func viewDidLoad() {
         super.viewDidLoad()
