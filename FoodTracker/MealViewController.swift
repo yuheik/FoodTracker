@@ -30,6 +30,9 @@ class MealViewController: UIViewController,
 
         // Handle the text field’s user input through delegate callbacks.
         nameTextField.delegate = self
+
+        // Enable the Save button only if the text field has a valid Meal name.
+        updateSaveButtonState()
     }
 
 // This is not used in this sample project.
@@ -45,7 +48,14 @@ class MealViewController: UIViewController,
         return true
     }
 
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // Disable the Save button while editting.
+        saveButton.isEnabled = false
+    }
+
     func textFieldDidEndEditing(_ textField: UITextField) {
+        updateSaveButtonState()
+        navigationItem.title = textField.text
     }
 
     //MARK: UIImagePickerControllerDelegate
@@ -102,5 +112,12 @@ class MealViewController: UIViewController,
         // Set the meal to be passed to MealTableViewController after the unwind segue.
         meal = Meal(name: name, photo: photo, rating: rating)
 
+    }
+
+    // MARK: Private Methods
+    private func updateSaveButtonState() {
+        // Disable the Save button if text field is empty.
+        let text = nameTextField.text ?? ""
+        saveButton.isEnabled = !(text.isEmpty)
     }
 }
