@@ -94,6 +94,9 @@ class MealViewController: UIViewController,
     }
 
     //MARK: Navigation
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
 
     // This method lets you configure a view controller before it's presented.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
