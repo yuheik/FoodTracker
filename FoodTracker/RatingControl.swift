@@ -32,17 +32,23 @@ import UIKit
     //MARK: Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
+        LogUtil.traceFunc()
+
         setupButtons()
     }
 
     required init(coder: NSCoder) {
         super.init(coder: coder)
+        LogUtil.traceFunc()
+
         setupButtons()
     }
 
 
     //MARK: Button Action
     func ratingButtonTapped(button: UIButton) {
+        LogUtil.traceFunc()
+
         guard let index = ratingButtons.index(of: button) else {
             fatalError("The button \(button), is not in the ratingButtons array \(ratingButtons)")
         }
@@ -62,6 +68,8 @@ import UIKit
 
     //MARK: Private Methods
     private func setupButtons() {
+        LogUtil.traceFunc()
+
         // clear any existing buttons
         for button in ratingButtons {
             removeArrangedSubview(button)
@@ -109,6 +117,8 @@ import UIKit
     }
 
     private func updateButtonSelectionStates() {
+        LogUtil.traceFunc()
+
         for (index, button) in ratingButtons.enumerated() {
             // If the index of a button is less than the rating, the button should be selected.
             button.isSelected = (index < rating)

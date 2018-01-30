@@ -14,6 +14,7 @@ class MealTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        LogUtil.traceFunc()
 
         // Use the edit button item provided by the table view controller.
         navigationItem.leftBarButtonItem = editButtonItem
@@ -29,24 +30,35 @@ class MealTableViewController: UITableViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        LogUtil.traceFunc()
+
         // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
+        LogUtil.traceFunc()
+        LogUtil.debug("always 1")
+
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        LogUtil.traceFunc(params: ["numberOfRowsInSection":section])
+        LogUtil.debug("number of rows in section \(section) => \(meals.count)")
+
         return meals.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        LogUtil.traceFunc(params: ["cellForRowAt":indexPath])
+
         // Table view cells are reused and should be dequeued using a cell identifier.
         let cellIdentifier = "MealTableViewCell"
 
-        guard let cell = tableView.dequeueReusableCell(withIdentifier:   cellIdentifier, for: indexPath) as? MealTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier,
+                                                       for: indexPath) as? MealTableViewCell else {
             fatalError("The dequeued cell is not an instance of MealTableViewCell")
         }
 
@@ -57,24 +69,34 @@ class MealTableViewController: UITableViewController {
         cell.photoImageView.image = meal.photo
         cell.ratingControl.rating = meal.rating
 
+        LogUtil.debug("Created cell for Meal(\(meal))")
         return cell
     }
 
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        LogUtil.traceFunc(params: ["canEditRowAt":indexPath])
+
         // Return false if you do not want the specified item to be editable.
+        LogUtil.debug("always return true")
         return true
     }
 
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        LogUtil.traceFunc(params: ["editingStyle":editingStyle,
+                                   "forRowAt":indexPath])
+
         if editingStyle == .delete {
+            LogUtil.debug("style: delete")
+
             // Delete the row from the data source
             meals.remove(at: indexPath.row)
             saveMeals()
 
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
+            LogUtil.debug("style: insert")
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
@@ -99,11 +121,16 @@ class MealTableViewController: UITableViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
+        LogUtil.traceFunc(params: ["segue"  : segue,
+                                   "sender" : sender])
 
         switch (segue.identifier ?? "") {
         case "AddItem":
+            LogUtil.debug("segue.identifier : AddItem")
             os_log("Adding a new meal.", log: OSLog.default, type: .debug)
+
         case "ShowDetail":
+            LogUtil.debug("segue.identifier : ShowDetail")
             guard let mealDetailViewController = segue.destination as? MealViewController else {
                 fatalError("Unexpected destination \(segue.destination)")
             }
@@ -126,14 +153,20 @@ class MealTableViewController: UITableViewController {
 
     // MARK: Actions
     @IBAction func unwindToMealList(sender: UIStoryboardSegue) {
+        LogUtil.traceFunc()
+
         if let sourceViewController = sender.source as? MealViewController,
-           let meal = sourceViewController.meal {
+            let meal = sourceViewController.meal {
 
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                LogUtil.debug("updating an existing meal")
+
                 // Update an exising meal.
                 meals[selectedIndexPath.row] = meal
                 tableView.reloadRows(at: [selectedIndexPath], with: .none)
             } else {
+                LogUtil.debug("add a new meal")
+
                 // Add a new meal.
                 let newIndexPath = IndexPath(row: meals.count, section: 0)
 
@@ -148,6 +181,8 @@ class MealTableViewController: UITableViewController {
 
     // MARK: Private Methods
     private func loadSampleMeals() {
+        LogUtil.traceFunc()
+
         let photo1 = UIImage(named: "meal1")
         let photo2 = UIImage(named: "meal2")
         let photo3 = UIImage(named: "meal3")
@@ -168,15 +203,21 @@ class MealTableViewController: UITableViewController {
     }
 
     private func saveMeals() {
+        LogUtil.traceFunc()
+
         let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(meals, toFile: Meal.ArchiveURL.path)
         if isSuccessfulSave {
+            LogUtil.debug("Meals successfully saved.")
             os_log("Meals successfully saved.", log: OSLog.default, type: .debug)
         } else {
+            LogUtil.debug("Failed to save Meals")
             os_log("Failed to save Meals...", log: OSLog.default, type: .error)
         }
     }
 
     private func loadMeals() -> [Meal]? {
+        LogUtil.traceFunc()
+
         return NSKeyedUnarchiver.unarchiveObject(withFile: Meal.ArchiveURL.path) as? [Meal]
     }
 }

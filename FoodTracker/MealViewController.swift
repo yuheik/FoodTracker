@@ -27,6 +27,7 @@ class MealViewController: UIViewController,
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        LogUtil.traceFunc()
 
         // Handle the text field’s user input through delegate callbacks.
         nameTextField.delegate = self
@@ -51,28 +52,38 @@ class MealViewController: UIViewController,
 
     //MARK: UITextFieldDelegate
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        LogUtil.traceFunc()
+
         // Hide the keyboard
         textField.resignFirstResponder()
         return true
     }
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        LogUtil.traceFunc()
+
         // Disable the Save button while editting.
         saveButton.isEnabled = false
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
+        LogUtil.traceFunc()
+
         updateSaveButtonState()
         navigationItem.title = textField.text
     }
 
     //MARK: UIImagePickerControllerDelegate
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        LogUtil.traceFunc()
+
         // Dismiss the picker if the user canceled.
         dismiss(animated: true, completion: nil)
     }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        LogUtil.traceFunc()
+
         // The info dictionary may contain multiple representations of the image. You want to use the original.
         guard let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage else {
             fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
@@ -86,6 +97,8 @@ class MealViewController: UIViewController,
     }
 
     @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
+        LogUtil.traceFunc(params: ["sender" : sender])
+
         // Hide the keyboard
         nameTextField.resignFirstResponder()
 
@@ -103,14 +116,17 @@ class MealViewController: UIViewController,
 
     //MARK: Navigation
     @IBAction func cancel(_ sender: UIBarButtonItem) {
+        LogUtil.traceFunc(params: ["sender" : sender])
 
         // Depending on styles of presentation (modal or push presentation),
         // this view controller needs to be dismissed in two different ways.
         let isPresentingInAddMealMode = presentingViewController is UINavigationController
         if isPresentingInAddMealMode {
+            LogUtil.debug("Add Meal Mode")
             dismiss(animated: true, completion: nil)
         }
         else if let owningNavigationController = navigationController {
+            LogUtil.debug("Edit Meal Mode")
             owningNavigationController.popViewController(animated: true)
         }
         else {
@@ -121,6 +137,8 @@ class MealViewController: UIViewController,
     // This method lets you configure a view controller before it's presented.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
+        LogUtil.traceFunc(params: ["sender" : sender!,
+                                   "segue"  : segue])
 
         // Configure the destination view controller only when the save button is pressed.
         guard let button = sender as? UIBarButtonItem, button === saveButton else {
@@ -134,11 +152,13 @@ class MealViewController: UIViewController,
 
         // Set the meal to be passed to MealTableViewController after the unwind segue.
         meal = Meal(name: name, photo: photo, rating: rating)
-
+        LogUtil.debug("Meal to be passed to MealTableViewController : \(meal!)")
     }
 
     // MARK: Private Methods
     private func updateSaveButtonState() {
+        LogUtil.traceFunc()
+
         // Disable the Save button if text field is empty.
         let text = nameTextField.text ?? ""
         saveButton.isEnabled = !(text.isEmpty)

@@ -17,6 +17,7 @@
 		04E539CE1F0A861E00777916 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04E539CD1F0A861E00777916 /* Assets.xcassets */; };
 		04E539D11F0A861E00777916 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04E539CF1F0A861E00777916 /* LaunchScreen.storyboard */; };
 		04E539DC1F0A861E00777916 /* FoodTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E539DB1F0A861E00777916 /* FoodTrackerTests.swift */; };
+		05CDE12120215E02005A99CD /* LogUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDE12020215E02005A99CD /* LogUtil.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		04E539D71F0A861E00777916 /* FoodTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FoodTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E539DB1F0A861E00777916 /* FoodTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTrackerTests.swift; sourceTree = "<group>"; };
 		04E539DD1F0A861E00777916 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		05CDE12020215E02005A99CD /* LogUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogUtil.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 		04E539C51F0A861E00777916 /* FoodTracker */ = {
 			isa = PBXGroup;
 			children = (
+				056DC3012022A56A00202442 /* Utils */,
 				04E539C61F0A861E00777916 /* AppDelegate.swift */,
 				04E539C81F0A861E00777916 /* MealViewController.swift */,
 				041402C81FFDF37D009F5D36 /* RatingControl.swift */,
@@ -106,6 +109,14 @@
 				04E539DD1F0A861E00777916 /* Info.plist */,
 			);
 			path = FoodTrackerTests;
+			sourceTree = "<group>";
+		};
+		056DC3012022A56A00202442 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				05CDE12020215E02005A99CD /* LogUtil.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -211,6 +222,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				041402CB2001FA00009F5D36 /* Meal.swift in Sources */,
+				05CDE12120215E02005A99CD /* LogUtil.swift in Sources */,
 				04E539C91F0A861E00777916 /* MealViewController.swift in Sources */,
 				041402C91FFDF37D009F5D36 /* RatingControl.swift in Sources */,
 				04E539C71F0A861E00777916 /* AppDelegate.swift in Sources */,
